@@ -38,6 +38,7 @@ add_executable(${CMAKE_PROJECT_NAME})
 # Add STM32CubeMX generated sources
 # add_subdirectory(cmake/stm32cubemx)
 add_subdirectory(Drivers)
+add_subdirectory(User_Drivers)
 add_subdirectory(Middlewares/lvgl-8.3.10)
 add_subdirectory(Middlewares/Third_Party)
 add_subdirectory(Core)
@@ -72,6 +73,7 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
     # stm32cubemx
     core
     drivers
+    user_drivers
     lvgl
     freertos
 
