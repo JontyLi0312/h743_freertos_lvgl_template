@@ -9,7 +9,6 @@ set(Defines_Syms
 
 set(Include_Dirs
     ${CMAKE_SOURCE_DIR}/Core/Inc
-    ${CMAKE_CURRENT_SOURCE_DIR}/User_Drivers/Inc
     ${CMAKE_CURRENT_SOURCE_DIR}/STM32H7xx_HAL_Driver/Inc
     ${CMAKE_CURRENT_SOURCE_DIR}/STM32H7xx_HAL_Driver/Inc/Legacy
     ${CMAKE_CURRENT_SOURCE_DIR}/CMSIS/Device/ST/STM32H7xx/Include
@@ -18,11 +17,6 @@ set(Include_Dirs
 
 set(Drivers_Src
     ${CMAKE_SOURCE_DIR}/Core/Src/system_stm32h7xx.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/User_Drivers/Src/lcd_fonts.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/User_Drivers/Src/lcd_image.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/User_Drivers/Src/lcd_pwm.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/User_Drivers/Src/touch_800x480.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/User_Drivers/Src/touch_iic.c
     ${CMAKE_CURRENT_SOURCE_DIR}/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim.c
     ${CMAKE_CURRENT_SOURCE_DIR}/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim_ex.c
     ${CMAKE_CURRENT_SOURCE_DIR}/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.c

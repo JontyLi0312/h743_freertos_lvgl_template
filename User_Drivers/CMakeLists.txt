@@ -1,8 +1,11 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.22)
 
 project(user_drivers LANGUAGES C ASM)
 
 set(Defines_Syms
+    USE_HAL_DRIVER
+    STM32H743xx
+    USE_PWR_LDO_SUPPLY
     $<$<CONFIG:Debug>:DEBUG>
 )
 
@@ -11,9 +14,6 @@ set(User_Drivers_Inc
     ${CMAKE_SOURCE_DIR}/Drivers/CMSIS/Include
     ${CMAKE_SOURCE_DIR}/Drivers/STM32H7xx_HAL_Driver/Inc
     ${CMAKE_SOURCE_DIR}/Drivers/CMSIS/Device/ST/STM32H7xx/Include
-    ${CMAKE_SOURCE_DIR}/Middlewares/Third_Party/FreeRTOS/Source/include
-    ${CMAKE_SOURCE_DIR}/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F
-    ${CMAKE_SOURCE_DIR}/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2
 )
 
 set(User_Drivers_Src
@@ -28,6 +28,6 @@ add_library(user_drivers INTERFACE)
 
 target_compile_definitions(user_drivers INTERFACE ${Defines_Syms})
 
-target_inlcude_directories(user_drivers INTERFACE ${User_Drivers_Inc})
+target_include_directories(user_drivers INTERFACE ${User_Drivers_Inc})
 
 target_sources(user_drivers INTERFACE ${User_Drivers_Src})
