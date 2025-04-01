@@ -1,0 +1,11 @@
+BasedOnStyle: Microsoft
+IndentWidth: 4
+TabWidth: 4
+UseTab: ForContinuationAndIndentation
+ColumnLimit: 80
+AlignConsecutiveMacros: true
+AlignTrailingComments: true
+SpacesBeforeTrailingComments: 2
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortIfStatementsOnASingleLine: false
+BreakBeforeBraces: Allman
