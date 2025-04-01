@@ -1,9 +1,7 @@
 #ifndef __PWM_H
 #define __PWM_H 
- 
- 
+
 #include "stm32h7xx_hal.h"
-#include "lcd_rgb.h" 
  
 // #define  LTDC_PWM_PIN								GPIO_PIN_6								// Òý½Å			
 // #define	LTDC_PWM_PORT								GPIOH										// ¶Ë¿Ú

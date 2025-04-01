@@ -22,7 +22,7 @@
 
 #include "lcd_pwm.h"
 #include "ltdc.h"
-#include "stm32h7xx_hal_gpio_ex.h"
+#include "stm32h7xx_hal_rcc.h"
 
 TIM_HandleTypeDef htim12;  // TIM_HandleTypeDef 结构体变量
 
@@ -44,13 +44,13 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim)
 	{
 		GPIO_LDC_Backlight_CLK_ENABLE;  // 开启背光引脚端口时钟
 
-		GPIO_InitStruct.Pin = LTDC_PWM_PIN;           // 背光引脚
+		GPIO_InitStruct.Pin = GPIO_PIN_6;             // 背光引脚
 		GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;       // 复用推挽输出
 		GPIO_InitStruct.Pull = GPIO_NOPULL;           // 不上下拉
 		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;  // 低速模式
 		GPIO_InitStruct.Alternate = GPIO_AF2_TIM12;   // 复用
 
-		HAL_GPIO_Init(LTDC_PWM_PORT, &GPIO_InitStruct);  // 初始化IO口
+		HAL_GPIO_Init(GPIOH, &GPIO_InitStruct);  // 初始化IO口
 	}
 }
 
@@ -86,8 +86,8 @@ void LCD_PWMinit(uint8_t pulse)
 	TIM_MasterConfigTypeDef sMasterConfig = {0};
 	TIM_OC_InitTypeDef sConfigOC = {0};
 
-	htim12.Instance = LTDC_PWM_TIM;  // 定时器
-	htim12.Init.Prescaler = 240;     // 预分频系数，此时定时器的计数频率为 1MKHz
+	htim12.Instance = TIM12;      // 定时器
+	htim12.Init.Prescaler = 240;  // 预分频系数，此时定时器的计数频率为 1MKHz
 	htim12.Init.CounterMode = TIM_COUNTERMODE_UP;  // 向上计数模式
 	htim12.Init.Period = LCD_PwmPeriod - 1;        // 重载值499，即计数500次
 	htim12.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;  // 时钟不分频
@@ -118,10 +118,10 @@ void LCD_PWMinit(uint8_t pulse)
 	sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;  // 有效状态为高电平
 	sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;   // 禁止快速模式
 	HAL_TIM_PWM_ConfigChannel(&htim12, &sConfigOC,
-							  LTDC_PWM_TIM_CHANNEL);  // 初始化配置PWM
+							  TIM_CHANNEL_1);  // 初始化配置PWM
 
-	HAL_TIM_MspPostInit(&htim12);                      // 初始化IO口
-	HAL_TIM_PWM_Start(&htim12, LTDC_PWM_TIM_CHANNEL);  // 启动PWM
+	HAL_TIM_MspPostInit(&htim12);               // 初始化IO口
+	HAL_TIM_PWM_Start(&htim12, TIM_CHANNEL_1);  // 启动PWM
 }
 
 /*************************************************************************************************
@@ -135,8 +135,8 @@ void LCD_PWMinit(uint8_t pulse)
 
 void HAL_TIM_Base_MspInit(TIM_HandleTypeDef *htim_base)
 {
-	if (htim_base->Instance == LTDC_PWM_TIM)
+	if (htim_base->Instance == TIM12)
 	{
-		LTDC_PWM_TIM_CLK_ENABLE;  // 开启 TIM 时钟
+		__HAL_RCC_GPIOH_CLK_ENABLE();  // 开启 TIM 时钟
 	}
 }
