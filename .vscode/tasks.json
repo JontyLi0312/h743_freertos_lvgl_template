@@ -40,7 +40,11 @@
                 "--target",
                 "clean"
             ],
-            "problemMatcher": []
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
         },
         {
             "label": "Flash",
