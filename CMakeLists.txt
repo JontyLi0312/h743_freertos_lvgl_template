@@ -41,6 +41,7 @@ add_executable(${CMAKE_PROJECT_NAME})
 add_subdirectory(Drivers)
 add_subdirectory(User_Drivers)
 add_subdirectory(Middlewares/lvgl-8.3.10)
+# add_subdirectory(app)
 add_subdirectory(Middlewares/Third_Party)
 add_subdirectory(Core)
 
@@ -76,6 +77,7 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
     drivers
     user_drivers
     lvgl
+    #app
     freertos
 
     # Add user defined libraries

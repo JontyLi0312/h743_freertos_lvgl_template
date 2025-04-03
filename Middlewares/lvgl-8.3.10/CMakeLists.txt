@@ -7,7 +7,8 @@ file(GLOB_RECURSE LVGL_SUBDIRS ${LVGL_DIR} "${LVGL_DIR}/*")
 set(LVGL_INCLUDE_DIRS)
 
 foreach(DIR ${LVGL_SUBDIRS})
-    if(IS_DIRECTORY ${LVGL_DIR}/${DIR} AND NOT ${DIR} MATCHES "demos")
+    #if(IS_DIRECTORY ${LVGL_DIR}/${DIR} AND NOT ${DIR} MATCHES "demos")
+    if(IS_DIRECTORY ${LVGL_DIR}/${DIR})
         list(APPEND LVGL_INCLUDE_DIRS ${LVGL_DIR}/${DIR})
     endif()
 endforeach()
@@ -15,6 +16,9 @@ endforeach()
 list(APPEND LVGL_INCLUDE_DIRS ${LVGL_DIR})
 
 file(GLOB SOURCE
+    "${CMAKE_CURRENT_LIST_DIR}/demos/music/*.c"
+    "${CMAKE_CURRENT_LIST_DIR}/demos/music/assets/*.c"
+    #"${CMAKE_CURRENT_LIST_DIR}/demos/stress/*.c"
     "${CMAKE_CURRENT_LIST_DIR}/src/core/*.c"
     "${CMAKE_CURRENT_LIST_DIR}/src/draw/*.c"
     "${CMAKE_CURRENT_LIST_DIR}/src/misc/*.c"
@@ -30,6 +34,10 @@ file(GLOB SOURCE
     "${CMAKE_CURRENT_LIST_DIR}/porting/*.c"
 )
 
-target_include_directories(lvgl INTERFACE ${LVGL_INCLUDE_DIRS})
+target_include_directories(lvgl INTERFACE 
+    ${LVGL_INCLUDE_DIRS}
+)
 
-target_sources(lvgl INTERFACE ${SOURCE})
+target_sources(lvgl INTERFACE 
+    ${SOURCE}
+)

@@ -17,6 +17,10 @@ set(Include_Dirs
     ${CMAKE_SOURCE_DIR}/Middlewares/Third_Party/FreeRTOS/Source/include
     ${CMAKE_SOURCE_DIR}/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F
     ${CMAKE_SOURCE_DIR}/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2
+    ${CMAKE_SOURCE_DIR}/User_Drivers/Inc
+    ${CMAKE_SOURCE_DIR}/Middlewares/lvgl-8.3.10/porting
+    ${CMAKE_SOURCE_DIR}/Middlewares/lvgl-8.3.10/demos/music
+    ${CMAKE_SOURCE_DIR}/Middlewares/lvgl-8.3.10/demos/stress
 )
 
 set(Core_Src
