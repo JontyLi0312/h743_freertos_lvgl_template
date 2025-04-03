@@ -26,12 +26,20 @@
 #include "memorymap.h"  // IWYU pragma: keep
 #include "quadspi.h"
 #include "rtc.h"
-#include "sdmmc.h"
+#include "sdmmc.h"  // IWYU pragma: keep
+#include "src/lv_api_map.h"
+#include "stm32h7xx_hal.h"
 #include "usart.h"
-
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "lcd_pwm.h"
+// #include "lv_demo_music.h"
+#include "lv_demo_stress.h"
+#include "lv_port_disp.h"
+#include "lv_port_indev.h"
+#include "lvgl.h"
+#include "touch_800x480.h"
 
 /* USER CODE END Includes */
 
@@ -66,7 +74,21 @@ void MX_FREERTOS_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+void setup_lvgl(void)
+{
 
+	// 创建一个红色背景的屏幕
+	lv_color_t red_color = lv_color_make(255, 0, 0);  // RGB红色
+
+	lv_obj_t *screen = lv_obj_create(NULL);
+	lv_obj_set_style_bg_color(screen, red_color,
+							  LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_set_style_bg_opa(screen, LV_OPA_COVER,
+							LV_PART_MAIN | LV_STATE_DEFAULT);
+
+	// 加载屏幕
+	lv_scr_load(screen);
+}
 /* USER CODE END 0 */
 
 /**
@@ -83,7 +105,6 @@ int main(void)
 	/* MPU
 	 * Configuration--------------------------------------------------------*/
 	MPU_Config();
-    
 
 	/* Enable the CPU Cache */
 
@@ -121,17 +142,23 @@ int main(void)
 	// MX_SDMMC1_SD_Init();
 	MX_DMA2D_Init();
 	/* USER CODE BEGIN 2 */
-
+	Touch_Init();
+	lv_init();
+	lv_port_disp_init();
+	lv_port_indev_init();
+	setup_lvgl();
+	// lv_demo_music();
+	// lv_demo_stress();
 	/* USER CODE END 2 */
 
 	/* Init scheduler */
-	osKernelInitialize();
+	// osKernelInitialize();
 
 	/* Call init function for freertos objects (in cmsis_os2.c) */
-	MX_FREERTOS_Init();
+	// MX_FREERTOS_Init();
 
 	/* Start scheduler */
-	osKernelStart();
+	// osKernelStart();
 
 	/* We should never get here as control is now taken by the scheduler */
 
@@ -140,7 +167,9 @@ int main(void)
 	while (1)
 	{
 		/* USER CODE END WHILE */
-
+		lv_task_handler();
+		Touch_Scan();
+		// HAL_Delay(20);
 		/* USER CODE BEGIN 3 */
 	}
 	/* USER CODE END 3 */
